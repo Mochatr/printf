@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * get_flags - Function
+ * @format: Parameter
+ * @i: Parameter
+ * Return: Value
+ */
+
 int get_flags(const char *format, int *i)
 {
 	int i, j;
