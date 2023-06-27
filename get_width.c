@@ -1,5 +1,14 @@
 #include "main.h"
 
+/**
+ * get_width - Function
+ * @format: Parameter
+ * @i: Parameter
+ * @va: Parameter
+ *
+ * Return: Value
+ */
+
 int get_width(const char *format, int *i, va_list va)
 {
 	int k;
