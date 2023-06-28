@@ -31,7 +31,7 @@ int handle_write_char(char c, char buff[],
 	{
 		buff[BUFF_SIZE - 1] = '\0';
 		for (k = 0; k < wa - 1; k++)
-			buff[BUFF_SIZE - i - 2] = pd;
+			buff[BUFF_SIZE - k - 2] = pd;
 
 		if (ta & F_MINUS)
 			return (write(1, &buff[0], 1) +
@@ -60,8 +60,8 @@ int handle_write_char(char c, char buff[],
 int write_number(int num_neg, int i, char buff[],
 	int ta, int wa, int pa, int sa)
 {
-	private int len = BUFF_SIZE - i - 1;
-	private char pd = ' ', c = 0;
+	int len = BUFF_SIZE - i - 1;
+	char pd = ' ', c = 0;
 
 	UNUSED(sa);
 
@@ -96,7 +96,7 @@ int write_num(int i, char buff[],
 	int ta, int wa, int pa,
 	int len, char pd, char c)
 {
-	private int k, pds = 1;
+	int k, pds = 1;
 
 	if (pa == 0 && i == BUFF_SIZE - 2 && buff[i] == '0' && wa == 0)
 		return (0);
@@ -155,8 +155,8 @@ int write_unsgnd(int num_neg, int i,
 	char buff[],
 	int ta, int wa, int pa, int sa)
 {
-	private int len = BUFF_SIZE - i - 1, k = 0;
-	private char pd = ' ';
+	int len = BUFF_SIZE - i - 1, k = 0;
+	char pd = ' ';
 
 	UNUSED(num_neg);
 	UNUSED(sa);
@@ -214,7 +214,7 @@ int write_unsgnd(int num_neg, int i,
 int write_pointer(char buff[], int i, int len,
 	int wa, int ta, char pd, char c, int pds)
 {
-	private int k;
+	int k;
 
 	if (wa > len)
 	{

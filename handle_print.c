@@ -27,7 +27,7 @@ int handle_print(const char *format, int *a, va_list va, char buff[],
 	};
 	for (i = 0; format_types[i].format != '\0'; i++)
 		if (format[*a] == format_types[i].format)
-			return (format_types[i].fn(va, buff, ks, ma, sap, bt));
+			return (format_types[i].f(va, buff, ks, ma, sap, bt));
 
 	if (format_types[i].format == '\0')
 	{
