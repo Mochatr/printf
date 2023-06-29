@@ -1,70 +1,66 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
+void print_buffer(char buff[], int *bfd);
+
 /**
- * _printf - It prints a function
- * @format: Parameter
- *
- * Return: Printed characters
+ * _printf - Function
+ * @format: parameter
+ * Return: Value
  */
+
 int _printf(const char *format, ...)
 {
-	int a, Printed = 0;
-	int characters_printed = 0;
-	int Flags, Width, Precision, Size, Buff_ind = 0;
-	va_list List;
-	char BUFFER[BUFF_SIZE];
+	int k, printed = 0, ptc = 0;
+	int ta, wa, pa, sa, bfd = 0;
+	va_list va;
+	char buff[BUFF_SIZE];
 
 	if (format == NULL)
-	{
 		return (-1);
-	}
-	va_Start(List, format);
 
-	for (a = 0; format && format[a] != '\0'; a++)
+	va_start(va, format);
+
+	for (k = 0; format && format[k] != '\0'; k++)
 	{
-		if (format[a] != '%')
+		if (format[k] != '%')
 		{
-			BUFFER[buff_ind++] = format[a];
-			if (butt_ind == BUFF_SIZE)
-			{
-				print_buffer(buffer, &buff_ind);
-			}
-			characters_printed++;
+			buff[bfd++] = format[k];
+			if (bfd == BUFF_SIZE)
+				print_buffer(buff, &bfd);
+			/ write(1, &format[k], 1); /
+			ptc++;
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			Flags = get_flags(format, &a);
-			Width = get_width(format, &a, List);
-			Precision = get_precision(format, &a, List);
-			Size = get_size(format, &a);
-			++a;
-			Printed = handle_print(format, &a, List,
-				BUFFER, Flags, Width, Precision, Size);
-			if (Printed == -1)
+			print_buffer(buff, &bfd);
+			ta = get_flags(format, &k);
+			wa = get_width(format, &k, va);
+			sa = get_size(format, &k);
+			++k;
+			printed = handle_print(format, &k, va, buff, ta, wa, pa, sa);
+			if (printed == -1)
 				return (-1);
-			characters_printed += Printed;
+			ptc += printed;
 		}
 	}
-	print_buffer(buffer, &buff_ind);
-	va_End(List);
-	return (characters_printed);
+
+	print_buffer(buff, &bfd);
+
+	va_end(va);
+
+	return (ptc);
 }
+
 /**
- * print_buffer - Function that prints the content of the buffer
- * if it does exist
- * @buffer: Parameter
- * @buff_ind: Argument
+ * print_buffer - Function
+ * @buff: Parameter
+ * @bfd: Parameter
  */
-void print_buffer(char buffer[], int *buff_ind)
+
+void print_buffer(char buff[], int *bfd)
 {
-	if (*buff_ind > 0)
-	{
-		write(1, &buffer[0], *buff_ind);
-	}
-	*buff_ind = 0;
+	if (*bfd > 0)
+		write(1, &buff[0], *bfd)
+	* bfd = 0;
 }
-
-
 

@@ -1,40 +1,42 @@
 #include "main.h"
 
 /**
- * get_precision - Function that calculates precision for printing.
- * @format: Argument
- * @i: Input
- * @list: Parameter
+ * get_precision - Function
+ * @format: Parameter
+ * @i: Parameter
+ * @va: Parameter
  *
- * Return: the precision for printing
+ * Return: Value
  */
-int get_precision(const char *format, int *i, va_list list)
+int get_precision(const char *format, int *i,
+		va_list va)
 {
-	int Curr = *i + 1;
-	int Precision = -1;
+	int k = *i + 1;
+	int pr = -1;
 
-	if (format[Curr] != '.')
+	if (format[k] != '.')
+		return (pr);
+
+	pr = 0;
+
+	for (k += 1; format[k] != '\0'; k++)
 	{
-		return (Precision);
-	}
-
-	Precision = 0;
-
-	for (Curr += 1; format[Curr] != '\0'; Curr++)
-	{
-		if (is_digit(format[Curr]))
+		if (is_digit(format[k]))
 		{
-			Curr++;
-			Precision = va_arg(list, int);
+			pr *= 10;
+			pr += format[k] - '0';
+		}
+		else if (format[k] == '*')
+		{
+			k++;
+			pr = va_arg(va, int);
 			break;
 		}
 		else
-		{
 			break;
-		}
 	}
 
-	*i = Curr - 1;
+	*i = k - 1;
 
-	return (Precision);
+	return (pr);
 }

@@ -1,186 +1,181 @@
 #include "main.h"
 
 /**
- * print_char - Function that prints a character
- * @types: Parameter
- * @buffer: Parameter
- * @flags: Argument
- * @width: Argument
- * @precision: Argument
- * @size: input
- *
- * Return: the number of characters printed.
+ * print_char - function
+ * @tp: parameter
+ * @buff: parameter
+ * @ta: parameter
+ * @wa: parameter
+ * @pa: parameter
+ * @sa: parameter
+ * Return: Value
  */
-int print_char(va _list types,
-		char buffer[], int flags, int width, int precision, int size)
-{
-	char c = va_arg(types, int);
 
-	return (handle_write_char(c, buffer, flags, width, precision, size));
+int print_char(va_list tp, char buff[],
+		int ta, int wa, int pa, int sa)
+{
+	char c = va_arg(tp, int);
+
+	return (handle_write_char(c, buff,
+		ta, wa, pa, sa));
 }
 
 /**
- * print_string - Function that prints a string
- * @types: Parameter.
- * @buffer: Parameter.
- * @flags: Input.
- * @width: Input.
- * @precision: Input.
- * @size: Input.
- *
- * Return: number of characters printed
+ * print_string - function
+ * @tp: parameter
+ * @buff: parameter
+ * @ta: parameter
+ * @wa: parameter
+ * @pa: parameter
+ * @sa: parameter
+ * Return: Value
  */
-int prnt_string(va_list types,
-		char buffer[], int flags, int width, int precision, int size)
+int  print_string(va_list tp, char buff[],
+		int ta, int wa, int pa, int sa)
 {
-	int Length = 0;
-	int a = 0;
-	char *string = va_arg(types, char *);
+	int len = 0, i;
+	char str = va_arg(tp, char);
 
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
-	if (string == NULL)
+	UNUSED(buff);
+	UNUSED(ta);
+	UNUSED(wa);
+	UNUSED(pa);
+	UNUSED(sa);
+	if (str == NULL)
 	{
-		string = "(null)";
-		if (precision >= 6)
-			string = "      ";
+		str = "(null)";
+		if (pa >= 6)
+			str = "  ";
 	}
-	while (string[Length] != '\0')
-		Length++;
 
-	if (precision >= 0 && precision < Length)
-		Length = precision;
+	while (str[len] != '\0')
+		len++;
 
-	if (width > Length)
+	if (pa >= 0 && pa <= len)
+		len = pa;
+
+	if (wa > len)
 	{
-		if (flags & F_MINUS)
+		if (ta & F_MINUS)
 		{
-			write(1, &string[0], Length);
-			for (a = width - Length; a > 0; a--)
+			write(1, &str[0], len);
+			for (i = wa - len; i > 0; i--)
 				write(1, " ", 1);
-			return (width);
-		}
-		else
-		{
-			for (a = width - Length; a > 0; a--)
-				write(1, " ", 1);
-			write(1, &string[0], Length);
-			return (width);
+			write(1, &str[0], len);
+			return (wa);
 		}
 	}
-	return (write(1, string, Length));
+
+	return (write(1, str, len));
 }
 
 /**
- * print_percent - Function that prints a percent sign.
- * @types: Arguments
- * @buffer: Parameter.
- * @flags: Input.
- * @width: Input.
- * @precision: Parameter.
- * @size: Parameter.
- *
- * Return: the number of characters printed
+ * print_percent - function
+ * @tp: parameter
+ * @buff: parameter
+ * @ta: parameter
+ * @wa: parameter
+ * @pa: parameter
+ * @sa: parameter
+ * Return: Value
  */
-int print_percent(va_list types,
-		char buffer[], int flags, int width, int precision, int size)
+int print_percent(va_list tp, char buff[],
+		int ta, int wa, int pa, int sa)
 {
-	UNUSED(types);
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	UNUSED(tp);
+	UNUSED(buff);
+	UNUSED(ta);
+	UNUSED(wa);
+	UNUSED(pa);
+	UNUSED(sa);
 	return (write(1, "%%", 1));
 }
+
 /**
- * print_int - Function that prints an integer.
- * @types: Arguments
- * @buffer: Parameter.
- * @flags: Input.
- * @width: Input.
- * @precision: Parameter.
- * @size: Parameter.
- *
- * Return: the number of characters printed.
+ * print_int - Function
+ * @tp: Parameter
+ * @buff: parameter
+ * @ta: parameter
+ * @wa: parameter
+ * @pa: parameter
+ * @sa: parameter
+ * Return: Value
  */
-int print_int(va_list types,
-		char buffer[], int flags, int width, int precision, int size)
+int print_int(va_list tp, char buff[],
+		int ta, int wa, int pa, int sa)
 {
-	int a = BUFF_SIZE - 2;
-	int isNegative = 0;
-	long int b = va_arg(types, long int);
-	unsigned long int Number;
+	int i = BUFF_SIZE - 2;
+	int num_neg = 0;
+	long int n = va_arg(tp, long int);
+	unsigned long int num;
 
-	b = convert_size_number(n, size);
+	n = convert_size_number(n, sa);
 
-	if (b == 0)
-		buffer[a--] = '\0';
+	if (n == 0)
+		buff[i--] = '0';
 
-	buffer[BUFF_SIZE - 1] + '\0';
-	Number = (unsigned long int)b;
+	buff[BUFF_SIZE - 1] = '\0';
+	num = (unsigned long int)n;
 
 	if (n < 0)
 	{
-		Number = (unsigned long int)((-1) * b);
-		isNegative = 1;
-	}
-	while (Number > 0)
-	{
-		buffer[a--] = (Number % 10) + '0';
-		Number /= 10;
+		num = (unsigned long int)((-1) * n);
+		num_neg = 1;
 	}
 
-	a++;
-	return (write_the_number(isNegative, buffer, flags, width, precision, size));
+	while (num > 0)
+	{
+		buff[i--] = (num % 10) + '0';
+		num /= 10;
+	}
+
+	i++;
+
+	return (write_number(num_neg, i,
+				buff, ta, wa, pa, sa));
 }
 
 /**
- * print_binary - function that prints an unsigned number
- * @types: Arguments
- * @buffer: Parameter.
- * @flags: Input.
- * @width: Input.
- * @precision: Parameter.
- * @size: Parameter.
- *
- * Return: the number of characters printed.
+ * print_binary - Function
+ * @tp: Parameter
+ * @buff: parameter
+ * @ta: parameter
+ * @wa: parameter
+ * @pa: parameter
+ * @sa: parameter
+ * Return: Value
  */
-int print_binary(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
+int print_binary(va_list tp, char buff[],
+		int ta, int wa, int pa, int sa)
 {
-	unsigned int i, j, k, Sum;
-	unsigned int x[32];
-	int Count;
+	unsigned int n, m, i, sum;
+	unsigned int a[32];
+	int count;
 
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
+	UNUSED(buff);
+	UNUSED(ta);
+	UNUSED(wa);
+	UNUSED(pa);
+	UNUSED(sa);
 
-	i = va_arg(types, unsigned int);
-	j = 2147783648;
-	x[0] = i / j;
-
-	for (k = 1; k < 32; k++)
+	n = va_arg(tp, unsigned int);
+	m = 2147483648; / (2 ^ 31) /
+	a[0] = n / m;
+	for (i = 1; i < 32; i++)
 	{
-		j /= 2;
-		x[k] = (i / j) % 2;
+		m /= 2;
+		a[i] = (n / m) % 2;
 	}
-	for (k = 0; Sum = 0; Count = 0; k < 32; k++)
+	for (i = 0; sum = 0; count = 0; i < 32; i++)
 	{
-		Sum += x[k];
-		if (Sum || k == 31)
+		sum += a[i];
+		if (sum || i == 31)
 		{
-			char y = '0' + x[k];
+			char z = '0' + a[i];
 
-			write(1, &y, 1);
-			Count++;
+			write(1, &z, 1);
+			count++;
 		}
 	}
-	return (Count);
+	return (count);
 }
