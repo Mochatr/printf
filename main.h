@@ -1,17 +1,18 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include
-#include
-#include
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <unistd.h>
 
 #define UNUSED(x) (void)(x)
 #define BUFF_SIZE 1024
 
-#define AR_MINUS 1
-#define AR_PLUS 2
-#define AR_ZERO 4
-#define AR_HASH 8
-#define AR_SPACE 16
+#define F_MINUS 1
+#define F_PLUS 2
+#define F_ZERO 4
+#define F_HASH 8
+#define F_SPACE 16
 
 #define S_LONG 2
 #define S_SHORT 1

@@ -9,21 +9,21 @@
 
 int get_flags(const char *format, int *i)
 {
-	int i, j;
+	int k, j;
 	int pa = 0;
-	const char arrith[] = {'-', '+', '0', '#', ' ', '\0'};
-	const int arrith_sym[] = {AR_MINUS, AR_PLUS, AR_ZERO, AR_HASH, AR_SPACE, 0};
+	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
+	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
 	for (j = *i + 1; format[j] != '\0'; j++)
 	{
-		for (i = 0; arrith[i] != '\0'; i++)
-			if (format[j] == arrith[i])
+		for (k = 0; FLAGS_CH[k] != '\0'; k++)
+			if (format[j] == FLAGS_CH[k])
 			{
-				pa |= arrith_sym[i];
+				pa |= FLAGS_ARR[k];
 				break;
 			}
 
-		if (arrith[i] == 0)
+		if (FLAGS_CH[k] == 0)
 			break;
 	}
 
@@ -31,4 +31,3 @@ int get_flags(const char *format, int *i)
 
 	return (pa);
 }
-
