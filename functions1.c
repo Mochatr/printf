@@ -86,7 +86,7 @@ int print_octal(va_list tp, char buff[],
  * Return: Value
  */
 int print_hexadecimal(va_list tp, char buff[],
-		int ta, int wa, int pa, int sa);
+	int ta, int wa, int pa, int sa)
 {
 	return (print_hexa(tp, "0123456789abcdef", buff,
 				ta, 'x', wa, pa, sa));
@@ -103,7 +103,7 @@ int print_hexadecimal(va_list tp, char buff[],
  * Return: Value
  */
 int print_hexa_upper(va_list tp, char buff[],
-		int ta, int wa, int int pa, int sa)
+	int ta, int wa, int pa, int sa)
 {
 	return (print_hexa(tp, "0123456789ABCDEF", buff, ta, 'X', wa, pa, sa));
 }

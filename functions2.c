@@ -14,10 +14,10 @@ int print_pointer(va_list tp, char buff[],
 		int ta, int wa, int pa, int sa)
 {
 	char c = 0, pd = ' ';
-	int int = BUFF_SIZE - 2, length = 2, pds = 1;
+	int ind = BUFF_SIZE - 2, length = 2, pds = 1;
 	unsigned long num_addrs;
 	char tab_hex[] = "0123456789abcdef";
-	void addrs = va_arg(tp, void);
+	void *addrs = va_arg(tp, void *);
 
 	UNUSED(wa);
 	UNUSED(sa);
@@ -33,7 +33,7 @@ int print_pointer(va_list tp, char buff[],
 	while (num_addrs > 0)
 	{
 		buff[ind--] = tab_hex[num_addrs % 16];
-		numçaddrs /= 16;
+		num_addrs /= 16;
 		length++;
 	}
 
@@ -64,7 +64,7 @@ int print_non_printable(va_list tp, char buff[],
 		int ta, int wa, int pa, int sa)
 {
 	int i = 0, offset = 0;
-	char str = va_arg(tp, char);
+	char *str = va_arg(tp, char *);
 
 	UNUSED(ta);
 	UNUSED(wa);
@@ -120,6 +120,7 @@ int print_reverse(va_list tp, char buff[],
 
 		str = ")NULL(";
 	}
+	for (i = 0; str[i]; i++)
 	for (i = i - 1; i >= 0; i--)
 	{
 		char z = str[i];

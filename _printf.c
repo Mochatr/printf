@@ -27,7 +27,6 @@ int _printf(const char *format, ...)
 			buff[bfd++] = format[k];
 			if (bfd == BUFF_SIZE)
 				print_buffer(buff, &bfd);
-			/ write(1, &format[k], 1); /
 			ptc++;
 		}
 		else
@@ -35,6 +34,7 @@ int _printf(const char *format, ...)
 			print_buffer(buff, &bfd);
 			ta = get_flags(format, &k);
 			wa = get_width(format, &k, va);
+			pa = get_precision(format, &k, va);
 			sa = get_size(format, &k);
 			++k;
 			printed = handle_print(format, &k, va, buff, ta, wa, pa, sa);
@@ -60,7 +60,7 @@ int _printf(const char *format, ...)
 void print_buffer(char buff[], int *bfd)
 {
 	if (*bfd > 0)
-		write(1, &buff[0], *bfd)
-	* bfd = 0;
+		write(1, &buff[0], *bfd);
+	*bfd = 0;
 }
 
